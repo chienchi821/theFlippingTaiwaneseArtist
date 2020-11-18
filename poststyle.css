@@ -1,0 +1,105 @@
+
+ul{
+  list-style: none;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+  flex-wrap: wrap;
+}
+
+li{
+  font-family: "Lucida Console", Monaco, monospace
+}
+
+.wall{
+  display: grid;
+  grid: auto
+  grid-gap: 10px
+  padding: 1rem
+}
+
+.post{
+  display: inline-flex;
+  padding: 0rem;
+  grid-row-gap: 0.5rem
+}
+
+.dcardpeople1{
+  font-size: 0.9rem;
+  color: Black;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  align-self: auto;
+  padding: 0.5rem
+}
+
+.dcardpeople2{
+  font-size: 1rem;
+  color: Black;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  align-self: auto;
+  padding: 0.5rem
+}
+
+.ptthaters1{
+  font-size: 0.8rem;
+  color: black;
+  background-color: hsla(0, 0%, 0%, 0.5);
+  align-self: auto;
+  padding: 0.5rem
+}
+
+.dcardpeople{
+  font-size: 1rem;
+  color: white;
+  background-color: hsla(100, 80%, 50%, 0.5);
+  align-self: auto;
+  padding: 0.5rem
+}
+
+.facebookusers{
+  font-size: 1rem;
+  color: white;
+  background-color: hsla(200, 80%, 50%, 0.5);
+  align-self: auto;
+  padding: 0.5rem
+}
+
+.nana{
+  background-color: transparent;
+  width: 720px;
+  height: 480px;
+  border: 0px solid #f1f1f1;
+  perspective: 1000px
+}
+
+.nana-inner{
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.8s;
+  transform-style: preserve-3d;
+}
+
+.nana:hover .nana-inner {
+  transform: rotateY(180deg)
+}
+
+.nana-front, .nana-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.nana-front{
+  background-color: dodgerblue;
+  color: white;
+}
+
+.nana-back{
+  background-color: #bbb;
+  color: black;
+  transform: rotateY(180deg);
+}
