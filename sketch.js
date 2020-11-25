@@ -90,243 +90,243 @@
     kdtree.draw();
   }
 
-  function mousePressed() {
-    for (let i = 0; i < particles.length; i+= 10) {
-      let desiredPosition = particles[i].desiredPosition;
-      desiredPosition.x = random(width);
-      desiredPosition.y = random(height);
-    }
-  }
+  // function mousePressed() {
+  //   for (let i = 0; i < particles.length; i+= 10) {
+  //     let desiredPosition = particles[i].desiredPosition;
+  //     desiredPosition.x = random(width);
+  //     desiredPosition.y = random(height);
+  //   }
+  // }
 
-  function touchStarted() {
-    for (let i = 0; i < particles.length; i+= 50) {
-      let desiredPosition = particles[i].desiredPosition;
-      desiredPosition.x = random(width);
-      desiredPosition.y = random(height);
-    }
-  }
-
-  function touchMoved() {
-    let test = kdtree.search(createVector(mouseX, mouseY));
-    if (test != null) {
-      test.particle.textColor = [0, 0, 0];
-    }
-
-  }
-
-  function mouseMoved() {
-    let test = kdtree.search(createVector(mouseX, mouseY));
-    if (test != null) {
-      test.particle.textColor = [0, 0, 0];
-    }
-
-  }
-
-  function keyPressed() {
-    for (let i = 0; i < particles.length; i+= 10) {
-      let desiredPosition = particles[i].desiredPosition;
-      desiredPosition.x = random(width);
-      desiredPosition.y = random(height);
-    }
-  }
-
-  let KDTree = function() {
-    this.root = null;
-    this.size = 100;
-  };
-
-  KDTree.prototype.insert = function(particle) {
-    this.root = KDNode.prototype.insert(this.root, particle, 0, 0, width, height, 1);
-  };
-
-  KDTree.prototype.search = function(position) {
-    return this.root.search(this.root, position, 1);
-  }
-
-  KDTree.prototype.draw = function() {
-    if (this.root) {
-      this.root.draw(this.root, true);
-    }
-  };
-
-
-  let Particle = function(position, leftTextContent, rightTextContent, index) {
-    this.position = position;
-    this.desiredPosition = createVector(random(width), random(height));
-    this.velocity = createVector();
-    this.leftTextContent = leftTextContent;
-    this.rightTextContent = rightTextContent;
-    // this.leftColor = colorList[parseInt(random(colorList.length))];
-    // this.rightColor = colorList[parseInt(random(colorList.length))];
-    this.textColor = [180, 180, 180];
-    this.desiredColor = [225, 222, 222];
-
-    this.index = index;
-  }
-
-
-
-
-  let KDNode = function( /*PVector*/ p, /*PVector*/ minP, /*PVector*/ maxP) {
-    this.particle = p;
-    this.minP = minP
-    this.maxP = maxP;
-    this.left_down = null;
-    this.right_up = null;
-  };
-
-  KDNode.prototype.draw = function(node, drawVert) {
-    if (!node) {
-      return;
-    }
-    let round = 0;
-    let textSizeValue = 30;
-    let textColor = color(50, 46, 47);
-    textSize(textSizeValue);
-    noStroke();
-    let rectWidth, rectHeight, rectX, rectY = null;
-    if (drawVert == true) {
-      // rectMode(CENTER)
-      textAlign(CENTER, CENTER);
-      if (node.right_up == null) {
-        rectWidth = node.maxP.x - node.particle.position.x;
-        rectHeight = node.maxP.y - node.minP.y;
-        rectX = node.particle.position.x + rectWidth * 0.5;
-        rectY = node.minP.y + rectHeight * 0.5;
-        // rect(rectX, rectY, rectWidth, rectHeight, round);
-
-        push();
-        translate(rectX, rectY);
-        scale((rectWidth) / (textWidth(node.particle.leftTextContent) + 10), (rectHeight - 5) / textSizeValue);
-        fill(node.particle.textColor);
-        text(node.particle.leftTextContent, 0, 0);
-        pop();
-      }
-      if (node.left_down == null) {
-        rectWidth = node.particle.position.x - node.minP.x;
-        rectHeight = node.maxP.y - node.minP.y;
-        rectX = node.minP.x + rectWidth * 0.5;
-        rectY = node.minP.y + rectHeight * 0.5;
-        // rect(rectX, rectY, rectWidth, rectHeight, round);
-
-        push();
-        translate(rectX, rectY);
-        scale((rectWidth) / (textWidth(node.particle.rightTextContent) + 10), (rectHeight - 5) / textSizeValue);
-        fill(node.particle.textColor);
-        text(node.particle.rightTextContent, 0, 0);
-        pop();
-      }
-    } else {
-      if (node.right_up == null) {
-        rectWidth = node.maxP.x - node.minP.x;
-        rectHeight = node.maxP.y - node.particle.position.y;
-        rectX = node.minP.x + rectWidth * 0.5;
-        rectY = node.particle.position.y + rectHeight * 0.5;
-        // rect(rectX, rectY, rectWidth, rectHeight, round);
-
-        push();
-        translate(rectX, rectY);
-        scale((rectWidth) / (textWidth(node.particle.leftTextContent) + 10), (rectHeight - 5) / textSizeValue);
-        fill(node.particle.textColor);
-        text(node.particle.leftTextContent, 0, 0);
-        pop();
-      }
-      if (node.left_down == null) {
-        rectWidth = node.maxP.x - node.minP.x;
-        rectHeight = node.particle.position.y - node.minP.y;
-        rectX = node.minP.x + rectWidth * 0.5;
-        rectY = node.minP.y + rectHeight * 0.5;
-        // rect(rectX, rectY, rectWidth, rectHeight, round);
-
-        push();
-        translate(rectX, rectY);
-        scale((rectWidth) / (textWidth(node.particle.rightTextContent) + 10), (rectHeight - 5) / textSizeValue);
-        fill(node.particle.textColor);
-        text(node.particle.rightTextContent, 0, 0);
-        pop();
-      }
-    }
-    KDNode.prototype.draw(node.left_down, !drawVert)
-    KDNode.prototype.draw(node.right_up, !drawVert)
-  }
-
-  KDNode.prototype.search = function( /*KDNode*/ node, /*Vector*/ p, /*boolean*/ isHorizontal) {
-    if (node == null) {
-      return node;
-    } else if (node.particle.position.x == p.x && node.particle.position.y == p.y) {
-      print("same!")
-      return node;
-    }
-    // The current node is vertical: compare x-coordinates
-    let searched = null;
-
-    if (isHorizontal) {
-      isHorizontal = !isHorizontal;
-      if (p.x - node.particle.position.x < 0) {
-        if (node.left_down != null) {
-          searched = node.search(node.left_down, p, isHorizontal);
-        } else {
-          return node;
-        }
-      } else {
-        if (node.right_up != null) {
-          searched = node.search(node.right_up, p, isHorizontal);
-        } else {
-          return node;
-        }
-      }
-    }
-    // The current node is horizontal: compare y-coordinates
-    else {
-      isHorizontal = !isHorizontal;
-      if (p.y - node.particle.position.y < 0) {
-        if (node.left_down != null) {
-          searched = node.search(node.left_down, p, isHorizontal);
-        } else {
-          return node;
-        }
-      } else {
-        if (node.right_up != null) {
-          searched = node.search(node.right_up, p, isHorizontal);
-        } else {
-          return node;
-        }
-      }
-    }
-
-    return searched;
-  }
-
-  KDNode.prototype.insert = function( /*KDNode*/ node, /*Particle*/ p, /*float*/ x0, /*float*/ y0, /*float*/ x1, /*float*/ y1, /*int*/ xcmp) {
-    if (node == null) {
-      return new KDNode(p, createVector(x0, y0), createVector(x1, y1));
-    } else if (node.particle.position.x == p.position.x && node.particle.position.y == p.position.y) return node;
-    // The current node is vertical: compare x-coordinates
-    if (xcmp == 1) {
-      xcmp = 0;
-      let cmp = p.position.x - node.particle.position.x;
-      if (cmp < 0)
-        node.left_down = node.insert(node.left_down, p, x0, y0, node.particle.position.x, y1, xcmp);
-      else
-        node.right_up = node.insert(node.right_up, p, node.particle.position.x, y0, x1, y1, xcmp);
-    }
-    // The current node is horizontal: compare y-coordinates
-    else {
-      xcmp = 1;
-      let cmp = p.position.y - node.particle.position.y;
-      if (cmp < 0)
-        node.left_down = node.insert(node.left_down, p, x0, y0, x1, node.particle.position.y, xcmp);
-      else
-        node.right_up = node.insert(node.right_up, p, x0, node.particle.position.y, x1, y1, xcmp);
-    }
-    return node;
-  }
-
-  function windowResized() {
-    resizeCanvas(windowWidth, windowHeight);
-    for (let i = 0; i < particles.length; i++) {
-      let desiredPosition = particles[i].desiredPosition;
-      desiredPosition.x = random(width);
-      desiredPosition.y = random(height);
-    }
-  }
+  // function touchStarted() {
+  //   for (let i = 0; i < particles.length; i+= 50) {
+  //     let desiredPosition = particles[i].desiredPosition;
+  //     desiredPosition.x = random(width);
+  //     desiredPosition.y = random(height);
+  //   }
+  // }
+  //
+  // function touchMoved() {
+  //   let test = kdtree.search(createVector(mouseX, mouseY));
+  //   if (test != null) {
+  //     test.particle.textColor = [0, 0, 0];
+  //   }
+  //
+  // }
+  //
+  // function mouseMoved() {
+  //   let test = kdtree.search(createVector(mouseX, mouseY));
+  //   if (test != null) {
+  //     test.particle.textColor = [0, 0, 0];
+  //   }
+  //
+  // }
+  //
+  // function keyPressed() {
+  //   for (let i = 0; i < particles.length; i+= 10) {
+  //     let desiredPosition = particles[i].desiredPosition;
+  //     desiredPosition.x = random(width);
+  //     desiredPosition.y = random(height);
+  //   }
+  // }
+  //
+  // let KDTree = function() {
+  //   this.root = null;
+  //   this.size = 100;
+  // };
+  //
+  // KDTree.prototype.insert = function(particle) {
+  //   this.root = KDNode.prototype.insert(this.root, particle, 0, 0, width, height, 1);
+  // };
+  //
+  // KDTree.prototype.search = function(position) {
+  //   return this.root.search(this.root, position, 1);
+  // }
+  //
+  // KDTree.prototype.draw = function() {
+  //   if (this.root) {
+  //     this.root.draw(this.root, true);
+  //   }
+  // };
+  //
+  //
+  // let Particle = function(position, leftTextContent, rightTextContent, index) {
+  //   this.position = position;
+  //   this.desiredPosition = createVector(random(width), random(height));
+  //   this.velocity = createVector();
+  //   this.leftTextContent = leftTextContent;
+  //   this.rightTextContent = rightTextContent;
+  //   // this.leftColor = colorList[parseInt(random(colorList.length))];
+  //   // this.rightColor = colorList[parseInt(random(colorList.length))];
+  //   this.textColor = [180, 180, 180];
+  //   this.desiredColor = [225, 222, 222];
+  //
+  //   this.index = index;
+  // }
+  //
+  //
+  //
+  //
+  // let KDNode = function( /*PVector*/ p, /*PVector*/ minP, /*PVector*/ maxP) {
+  //   this.particle = p;
+  //   this.minP = minP
+  //   this.maxP = maxP;
+  //   this.left_down = null;
+  //   this.right_up = null;
+  // };
+  //
+  // KDNode.prototype.draw = function(node, drawVert) {
+  //   if (!node) {
+  //     return;
+  //   }
+  //   let round = 0;
+  //   let textSizeValue = 30;
+  //   let textColor = color(50, 46, 47);
+  //   textSize(textSizeValue);
+  //   noStroke();
+  //   let rectWidth, rectHeight, rectX, rectY = null;
+  //   if (drawVert == true) {
+  //     // rectMode(CENTER)
+  //     textAlign(CENTER, CENTER);
+  //     if (node.right_up == null) {
+  //       rectWidth = node.maxP.x - node.particle.position.x;
+  //       rectHeight = node.maxP.y - node.minP.y;
+  //       rectX = node.particle.position.x + rectWidth * 0.5;
+  //       rectY = node.minP.y + rectHeight * 0.5;
+  //       // rect(rectX, rectY, rectWidth, rectHeight, round);
+  //
+  //       push();
+  //       translate(rectX, rectY);
+  //       scale((rectWidth) / (textWidth(node.particle.leftTextContent) + 10), (rectHeight - 5) / textSizeValue);
+  //       fill(node.particle.textColor);
+  //       text(node.particle.leftTextContent, 0, 0);
+  //       pop();
+  //     }
+  //     if (node.left_down == null) {
+  //       rectWidth = node.particle.position.x - node.minP.x;
+  //       rectHeight = node.maxP.y - node.minP.y;
+  //       rectX = node.minP.x + rectWidth * 0.5;
+  //       rectY = node.minP.y + rectHeight * 0.5;
+  //       // rect(rectX, rectY, rectWidth, rectHeight, round);
+  //
+  //       push();
+  //       translate(rectX, rectY);
+  //       scale((rectWidth) / (textWidth(node.particle.rightTextContent) + 10), (rectHeight - 5) / textSizeValue);
+  //       fill(node.particle.textColor);
+  //       text(node.particle.rightTextContent, 0, 0);
+  //       pop();
+  //     }
+  //   } else {
+  //     if (node.right_up == null) {
+  //       rectWidth = node.maxP.x - node.minP.x;
+  //       rectHeight = node.maxP.y - node.particle.position.y;
+  //       rectX = node.minP.x + rectWidth * 0.5;
+  //       rectY = node.particle.position.y + rectHeight * 0.5;
+  //       // rect(rectX, rectY, rectWidth, rectHeight, round);
+  //
+  //       push();
+  //       translate(rectX, rectY);
+  //       scale((rectWidth) / (textWidth(node.particle.leftTextContent) + 10), (rectHeight - 5) / textSizeValue);
+  //       fill(node.particle.textColor);
+  //       text(node.particle.leftTextContent, 0, 0);
+  //       pop();
+  //     }
+  //     if (node.left_down == null) {
+  //       rectWidth = node.maxP.x - node.minP.x;
+  //       rectHeight = node.particle.position.y - node.minP.y;
+  //       rectX = node.minP.x + rectWidth * 0.5;
+  //       rectY = node.minP.y + rectHeight * 0.5;
+  //       // rect(rectX, rectY, rectWidth, rectHeight, round);
+  //
+  //       push();
+  //       translate(rectX, rectY);
+  //       scale((rectWidth) / (textWidth(node.particle.rightTextContent) + 10), (rectHeight - 5) / textSizeValue);
+  //       fill(node.particle.textColor);
+  //       text(node.particle.rightTextContent, 0, 0);
+  //       pop();
+  //     }
+  //   }
+  //   KDNode.prototype.draw(node.left_down, !drawVert)
+  //   KDNode.prototype.draw(node.right_up, !drawVert)
+  // }
+  //
+  // KDNode.prototype.search = function( /*KDNode*/ node, /*Vector*/ p, /*boolean*/ isHorizontal) {
+  //   if (node == null) {
+  //     return node;
+  //   } else if (node.particle.position.x == p.x && node.particle.position.y == p.y) {
+  //     print("same!")
+  //     return node;
+  //   }
+  //   // The current node is vertical: compare x-coordinates
+  //   let searched = null;
+  //
+  //   if (isHorizontal) {
+  //     isHorizontal = !isHorizontal;
+  //     if (p.x - node.particle.position.x < 0) {
+  //       if (node.left_down != null) {
+  //         searched = node.search(node.left_down, p, isHorizontal);
+  //       } else {
+  //         return node;
+  //       }
+  //     } else {
+  //       if (node.right_up != null) {
+  //         searched = node.search(node.right_up, p, isHorizontal);
+  //       } else {
+  //         return node;
+  //       }
+  //     }
+  //   }
+  //   // The current node is horizontal: compare y-coordinates
+  //   else {
+  //     isHorizontal = !isHorizontal;
+  //     if (p.y - node.particle.position.y < 0) {
+  //       if (node.left_down != null) {
+  //         searched = node.search(node.left_down, p, isHorizontal);
+  //       } else {
+  //         return node;
+  //       }
+  //     } else {
+  //       if (node.right_up != null) {
+  //         searched = node.search(node.right_up, p, isHorizontal);
+  //       } else {
+  //         return node;
+  //       }
+  //     }
+  //   }
+  //
+  //   return searched;
+  // }
+  //
+  // KDNode.prototype.insert = function( /*KDNode*/ node, /*Particle*/ p, /*float*/ x0, /*float*/ y0, /*float*/ x1, /*float*/ y1, /*int*/ xcmp) {
+  //   if (node == null) {
+  //     return new KDNode(p, createVector(x0, y0), createVector(x1, y1));
+  //   } else if (node.particle.position.x == p.position.x && node.particle.position.y == p.position.y) return node;
+  //   // The current node is vertical: compare x-coordinates
+  //   if (xcmp == 1) {
+  //     xcmp = 0;
+  //     let cmp = p.position.x - node.particle.position.x;
+  //     if (cmp < 0)
+  //       node.left_down = node.insert(node.left_down, p, x0, y0, node.particle.position.x, y1, xcmp);
+  //     else
+  //       node.right_up = node.insert(node.right_up, p, node.particle.position.x, y0, x1, y1, xcmp);
+  //   }
+  //   // The current node is horizontal: compare y-coordinates
+  //   else {
+  //     xcmp = 1;
+  //     let cmp = p.position.y - node.particle.position.y;
+  //     if (cmp < 0)
+  //       node.left_down = node.insert(node.left_down, p, x0, y0, x1, node.particle.position.y, xcmp);
+  //     else
+  //       node.right_up = node.insert(node.right_up, p, x0, node.particle.position.y, x1, y1, xcmp);
+  //   }
+  //   return node;
+  // }
+  //
+  // function windowResized() {
+  //   resizeCanvas(windowWidth, windowHeight);
+  //   for (let i = 0; i < particles.length; i++) {
+  //     let desiredPosition = particles[i].desiredPosition;
+  //     desiredPosition.x = random(width);
+  //     desiredPosition.y = random(height);
+  //   }
+  // }
