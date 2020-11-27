@@ -1,6 +1,3 @@
-/* 
-
-
 .nana{
   background-color: transparent;
   width: 744px;
@@ -22,7 +19,7 @@
   transform: rotateY(180deg)
 }
 
-.nana-front, .nana-back {
+.nana-front .nana-back {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -39,7 +36,7 @@
   background-color: #bbb;
   color: black;
   transform: rotateY(180deg);
-} */
+}
 
 #message{
   color: #f1f1f1;
