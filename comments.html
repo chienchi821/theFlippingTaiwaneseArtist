@@ -1,50 +1,103 @@
 <!DOCTYPE html>
 
 <html lang="en" dir="ltr">
-  <head>
-    <title>Swinging Taiwan Artist</title>
-    <link rel="stylesheet" href="poststyle.css">
-</head>
+<head>
+<title>Swinging Taiwan Artist</title>
+<link rel="stylesheet" href="poststyle.css">
+<style>
+body{
+  /* background-color: black; */
+  /* overflow-y: hidden; */
+  font-family: Arial, Helvetica, sans-serif;
+}
 
+.flip-card {
+  background-color: transparent;
+  width: 744px;
+  height: 1157px;
+  perspective: 1000px;
+  float:left;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.flip-card:hover .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+.flip-card-front {
+  background-color: #bbb;
+  color: black;
+}
+
+.flip-card-back {
+  background-color: #2980b9;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+#message{
+  color: #f1f1f1;
+  position: absolute;
+  display: inline;
+  z-index: 99;
+}
+
+#message .random-sentence {
+  font-weight: 500;
+  display: inline-block;
+  writing-mode: horizontal;
+}
+
+</style>
+</head>
 <body>
 
-<style>
-  body{
-    /* background-color: black; */
-    overflow-y: hidden;
-  }
-</style>
-
-<h1></h1>
-<p></p>
+<h1>The Flipping Girl</h1>
+<h3>Hover over the image below:</h3>
 <div id="message">
 
 </div>
+<div class="flip-card">
+  <div class="flip-card-inner">
+    <div class="flip-card-front">
+      <img src="EML-Final Project-a.png" alt="Avatar" style="width:744px;height:1157px;">
+    </div>
+    <div class="flip-card-back">
+      <img src="EML-Final Project-b.png" alt="Avatar" style="width:744px;height:1157px;">
+    </div>
+  </div>
+</div>
 
-<img src="EML-Final Project.png" alt="Nanapng" usemap="#nanamap" style="float:left;width:480px">
+</body>
+
+<!-- <img src="EML-Final Project-c.png" alt="Nanapng" usemap="#nanamap" style="float:left;width:480px">
 
 <map name="nanamap">
-<area shape="poly" coords="130,130,310,130,360,300,460,335,450,410,340,350,80,340" alt="body" href="IMG_6801.JPG" target="_self">
-<area shape="rect" coords="95,340,340,500" alt="mirror" href="IMG_6802.JPG" target="_self">
-<area shape="circle" coords="205,84,56" alt="head" href="IMG_6803.PNG" target="_self">
-</map>
-
-<!-- <div class="nana">
-  <div class="nana-inner">
-      <div class="nana-front">
-
-      </div>
-      <div class="nana-back">
-        <img src="EML-Final Project.png" alt="NANATW"
-        style="width:744px;height:1080px;align: center">
-      </div>
-  </div>
-</div> -->
+<area shape="poly" coords="130,130,310,130,360,300,460,335,450,410,340,350,80,340" alt="body" href="EML-Final Project-a.png" target="_self">
+<area shape="rect" coords="95,340,340,500" alt="mirror" href="EML-Final Project-b.png" target="_self">
+<area shape="circle" coords="205,84,56" alt="head" href="EML-Final Project-c.png" target="_self">
+</map> -->
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/p5@1.1.9/lib/p5.js"> </script>
 <script src="rawsketch.js"></script>
 
-</body>
 </html>

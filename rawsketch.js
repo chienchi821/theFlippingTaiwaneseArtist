@@ -1,12 +1,12 @@
 var sentence = "This is where the comments go"
 
-for (let i = 0; i < 10; i++) {
+for (let i = 0; i < 30; i++) {
   $("#message").append(
     $('<div/>', {
       class: 'random-sentence',
       html: sentence
     }).css({
-      fontSize: random(30, 50)+'px',
+      fontSize: random(25, 55)+'px',
       textOrientation: random(0,2) == 1?'upright': random(0,1) == 1?'sideways':'sideways-right',
     }));
 }
@@ -21,8 +21,6 @@ function random(start, end, step = 1) {
   let max = (end-start)/step;
   return Math.floor(Math.random() * (max + 1)) * step + start;
 }
-
-
 
 let value = 0;
 function draw() {
