@@ -1,16 +1,20 @@
 let value = 0;
-function draw() {
-  background(value)
 
-}
-
-function mouseClicked() {
-  if (value === 0) {
-    value = 255;
-  } else {
-    value = 0;
-  }
-}
+// function setup() {
+//   createCanvas(1920,1080)
+// }
+//
+// function draw() {
+// background(value)
+// }
+//
+// function mouseClicked() {
+//   if (value === 0) {
+//     value = 255;
+//   } else {
+//     value = 0;
+//   }
+// }
 
 var sentence = "舔共藝人賣國求榮賤畜習近平的形狀破腦麻仔陪睡噓噁討厭胖蔣開穴氣到棺材板跳起來槍斃沒存在感米田共垃圾爛咖煩"
 
@@ -24,7 +28,7 @@ for (let i = 0; i < 10; i++) {
       textOrientation: random(0,2) == 1?'upright': random(0,1) == 1?'sideways':'sideways-right',
     }));
 }
-  $('div').width(screen.width * 0.57);
+  $('div').width(screen.width * 0.60);
 
 $("#message").on('click', '.random-sentence', function() {
   $(this).animate({fontSize:'+=200', opacity: '0'}, 500, function() {
