@@ -1,8 +1,5 @@
 let value = 0;
 
-// function setup() {
-//   createCanvas(1920,1080)
-// }
 //
 // function draw() {
 // background(value)
